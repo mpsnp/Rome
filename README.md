@@ -29,7 +29,6 @@ For security reasons Rome requires every request to contain a valid API Key, on 
 
 ```
 Created master API Key: fbdc5668-c02f-456d-9e8f-6d02fb8ef490
-
 ```
 The API Key is sent as a header "api_key" with every request.
 
