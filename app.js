@@ -12,8 +12,7 @@ var config = require("./app/config/development");
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.raw({ type: "application/zip" }));
-app.use(bodyParser.raw({ type: "application/octet-stream" }));
+app.use(bodyParser.raw({ type: "application/zip", limit: '100mb' }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Models
@@ -35,12 +34,16 @@ app.use("/packages", packages);
 // Database
 connect()
     .on("error", console.log)
-    .on("disconnected", connect)
+    .on("disconnected", connect);
 
 function connect () {
     var options = { server: { socketOptions: { keepAlive: 1 } } };
     return mongoose.connect(config.db, options).connection;
 }
+
+// Seed
+var seed = require("./app/utilities/seed");
+seed.client();
 
 var port = process.env.PORT || "3000";
 app.set("port", port);
@@ -49,3 +52,4 @@ app.listen(port);
 // Setup HTTP Server
 var http = require("http");
 var server = http.createServer(app);
+console.log("Server Started on port: " + port);

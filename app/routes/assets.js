@@ -16,10 +16,14 @@ router.route("/")
                 res.statusCode = 500;
                 res.send({message: "Error fetching asset"});
             } else {
-                return res.json(assets);
+                if (assets.length > 0) {
+                    return res.json(assets);
+                } else {
+                    return res.json([]);
+                }
             }
         });
-        
+
     })
 
     .post(function(req, res) {
@@ -82,7 +86,12 @@ router.route("/:name/:revision")
                 res.statusCode = 500;
                 res.send({message: "Error fetching asset"});
             } else {
-                return res.json(asset);
+                if (asset) {
+                    return res.json(asset);
+                } else {
+                    res.statusCode = 400;
+                    res.send({message: "Asset not found"});
+                }
             }
         });
     });
@@ -99,7 +108,12 @@ router.route("/:id")
                 res.statusCode = 500;
                 res.send({message: "Error fetching asset"});
             } else {
-                return res.json(asset);
+                if (asset) {
+                    return res.json(asset);
+                } else {
+                    res.statusCode = 400;
+                    res.send({message: "Asset not found"});
+                }
             }
         });
 
@@ -108,8 +122,7 @@ router.route("/:id")
     .delete(function(req, res) {
 
         var query = { _id: req.params.id };
-
-        Asset.findOne().lean().exec(query, function(err, asset) {
+        Asset.findOne(query).lean().exec(query, function(err, asset) {
             if (asset) {
                 Asset.remove(query, function(err) {
                     if (err) {
