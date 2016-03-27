@@ -14,11 +14,11 @@ router.route("/")
             if (err) {
                 console.log(err);
                 res.statusCode = 500;
-                res.send({message: "Error fetching clients"});
+                res.json({message: "Error fetching clients"});
             } else {
                 return res.json(clients);
             }
-            
+
         });
 
     })
@@ -40,14 +40,14 @@ router.route("/")
 
     });
 
-router.route("/:api_key")
+router.route("/:id")
 
     .delete(function(req, res) {
 
-        var query = { api_key: req.params.api_key };
+        var query = { _id: req.params.id };
         Client.count(query, function(err, count) {
             if (count > 0) {
-                Client.remove(query, function(err, client) {
+                Client.remove(query, function(err) {
                     if (err) {
                         console.log(err);
                         res.statusCode = 500;
@@ -63,7 +63,5 @@ router.route("/:api_key")
         });
 
     });
-
-
 
 module.exports = router;

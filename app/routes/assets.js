@@ -14,12 +14,12 @@ router.route("/")
             if (err) {
                 console.log(err);
                 res.statusCode = 500;
-                res.send({message: "Error fetching asset"});
+                res.json({message: "Error fetching asset"});
             } else {
                 if (assets.length > 0) {
-                    return res.json(assets);
+                    res.json(assets);
                 } else {
-                    return res.json([]);
+                    res.json([]);
                 }
             }
         });
@@ -48,7 +48,7 @@ router.route("/")
                         if (err) {
                             console.log(err);
                             res.statusCode = 500;
-                            res.send({message: err.message});
+                            res.json({message: err.message});
                         } else {
                             var filePath = fileHandling.assetFilePath(assetName, assetRevision, asset._id, fileExtension);
                             fileHandling.writeFile(filePath, req.body, function (success) {
@@ -57,20 +57,20 @@ router.route("/")
                                 } else {
                                     asset.remove();
                                     res.statusCode = 500;
-                                    res.send({message: "Error saving asset"});
+                                    res.json({message: "Error saving asset"});
                                 }
                             });
                         }
                     });
                 } else {
                     res.statusCode = 500;
-                    res.send({message: "Error creating path"});
+                    res.json({message: "Error creating path"});
                 }
             });
 
         } else {
             res.statusCode = 400;
-            res.send({message: "Missing required headers / request body empty"});
+            res.json({message: "Missing required headers / request body empty"});
         }
 
     });
@@ -84,13 +84,13 @@ router.route("/:name/:revision")
             if (err) {
                 console.log(err);
                 res.statusCode = 500;
-                res.send({message: "Error fetching asset"});
+                res.json({message: "Error fetching asset"});
             } else {
                 if (asset) {
-                    return res.json(asset);
+                    res.json(asset);
                 } else {
-                    res.statusCode = 400;
-                    res.send({message: "Asset not found"});
+                    res.statusCode = 404;
+                    res.json({message: "Asset not found"});
                 }
             }
         });
@@ -106,13 +106,13 @@ router.route("/:id")
             if (err) {
                 console.log(err);
                 res.statusCode = 500;
-                res.send({message: "Error fetching asset"});
+                res.json({message: "Error fetching asset"});
             } else {
                 if (asset) {
-                    return res.json(asset);
+                    res.json(asset);
                 } else {
-                    res.statusCode = 400;
-                    res.send({message: "Asset not found"});
+                    res.statusCode = 404;
+                    res.json({message: "Asset not found"});
                 }
             }
         });
