@@ -27,9 +27,9 @@ app.use(function(req, res, next) {
 
 // Routes
 var clients = require("./app/routes/clients");
-var packages = require("./app/routes/assets");
+var assets = require("./app/routes/assets");
 app.use("/clients", clients);
-app.use("/packages", packages);
+app.use("/assets", assets);
 
 // Database
 connect()
