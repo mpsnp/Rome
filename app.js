@@ -37,8 +37,17 @@ connect()
     .on("disconnected", connect);
 
 function connect () {
+	var mongo_db;
+	var docker_db = process.env.DB_PORT;
+
+	if (docker_db) {
+		mongo_db = docker_db.replace( 'tcp', 'mongodb' ) + '/rome';
+	} else {
+		mongo_db = config.db;
+	}
+
     var options = { server: { socketOptions: { keepAlive: 1 } } };
-    return mongoose.connect(config.db, options).connection;
+    return mongoose.connect(mongo_db, options).connection;
 }
 
 // Seed

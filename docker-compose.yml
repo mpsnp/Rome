@@ -1,0 +1,18 @@
+db:
+  image: mongo
+  ports:
+    - "27017:27017"
+  command: "--smallfiles --logpath=/dev/null"
+  restart: always
+web:
+  build: .
+  command: node app.js
+  volumes:
+    - .:/rome
+    - /rome/node_modules
+  ports:
+    - "3000:3000"
+  links:
+    - db
+  environment:
+    PORT: 3000
