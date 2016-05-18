@@ -8,7 +8,7 @@ web:
   build: .
   command: node app.js
   volumes:
-    - .:/rome
+    - /rome
     - /rome/node_modules
   ports:
     - "3000:3000"
