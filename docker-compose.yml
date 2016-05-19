@@ -17,3 +17,5 @@ web:
     - "3000:3000"
   links:
     - db
+  environment:
+    PORT: 3000
