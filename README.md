@@ -8,7 +8,6 @@ Rome enables users to store and retrieve assets through a simple API.
 ```
 docker-compose build
 docker-compose up
-
 ```
 
 ###Setting up on OSX
