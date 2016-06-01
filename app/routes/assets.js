@@ -2,7 +2,7 @@ var fileHandling = require("../utilities/file_handling");
 var express = require("express");
 var mongoose = require("mongoose");
 var mime = require("mime-types");
-
+var escapeRegexp = require("escape-string-regexp");
 var router = express.Router();
 var Asset = mongoose.model("Asset");
 
@@ -79,7 +79,12 @@ router.route("/:name/:revision")
 
     .get(function(req, res) {
 
-        var query = { name: req.params.name, revision: req.params.revision, active: true };
+        var query = {
+            name: new RegExp('^' + escapeRegexp(req.params.name) + '$', "i"),
+            revision: new RegExp('^' + escapeRegexp(req.params.revision) + '$', "i"),
+            active: true
+        };
+
         Asset.findOne(query).sort({createdAt: -1}).lean().exec(function (err, asset) {
             if (err) {
                 console.log(err);
