@@ -1,6 +1,6 @@
 {
   "name": "rome-server",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "description": "Rome server",
   "main": "app.js",
   "author": "146BC",
