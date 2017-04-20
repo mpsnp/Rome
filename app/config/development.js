@@ -1,3 +1,3 @@
 module.exports = {
-    db: "mongodb://localhost/rome"
+    db: process.env.DB_URL || "mongodb://localhost/rome"
 }
